@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dice Roller</title>
+  <link href="https://fonts.googleapis.com/css2?family=Prociono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css"/>
+</head>
+
+<body>
+
+    <div id="NamePrompt">
+        <p>Enter Your Name:</p>
+        <input id="PlayerName" type="text" value="" /> <button onclick="submitName()">Join</button>
+    </div>
+
+    <div id="DiceBar">
+        <input class="mult" id="multplus" type="submit" value="+"/>
+        <span id="mult">1</span>
+        <input class="mult" id="multminus" type="submit" value="-"/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input class="die" id="publish-d4" data-sides="4" type="submit" value="d4"/>
+        <input class="die" id="publish-d6" data-sides="6" type="submit" value="d6"/>
+        <input class="die" id="publish-d8" data-sides="8" type="submit" value="d8"/>
+        <input class="die" id="publish-d10" data-sides="10" type="submit" value="d10"/>
+        <input class="die" id="publish-d12" data-sides="12" type="submit" value="d12"/>
+        <input class="die" id="publish-d20" data-sides="20" type="submit" value="d20"/>
+        <input class="die" id="publish-d100" data-sides="100" type="submit" value="d100"/>
+    </div>
+
+
+<div id="PlayerGrid"></div>
+
+<script src="https://cdn.pubnub.com/sdk/javascript/pubnub.4.21.7.min.js"></script>
+<script src="js/dice.js"></script>
+
+</body>
+</html>
