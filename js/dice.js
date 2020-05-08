@@ -1,15 +1,19 @@
 let CHANNEL_NAME = 'amakely-dice';
-
 let mult = 1;
+let occupants = [];
+let uuid = '';
+let pubnub;
 
 const exit = (e) => {
-  sendMessage(
-    {
-      sender: uuid,
-      type: 'leave',
-      username: myName
-    }
-  );
+  if (pubnub) {
+    sendMessage(
+      {
+        sender: uuid,
+        type: 'leave',
+        username: myName
+      }
+    );
+  }
 }
 
 const multPlus = (e) => {
@@ -44,15 +48,22 @@ window.addEventListener('unload', exit);
 
 let players = [];
 let myName = '';
+
+
 const submitName = () => {
   myName = document.getElementById('PlayerName').value;
-  sendMessage(
-    {
-      sender: uuid,
-      type: 'join',
-      username: myName
-    }
-  );
+  uuid = 'uuid-' + myName;
+
+  initPubNub();
+
+
+  // sendMessage(
+  //   {
+  //     sender: uuid,
+  //     type: 'join',
+  //     username: myName
+  //   }
+  // );
   document.getElementById('NamePrompt').style.display = 'none';
   document.getElementById('DiceBar').style.display = 'block';
 
@@ -63,24 +74,39 @@ const submitName = () => {
     },
     function (status, response) {
       if (status.isError) {
-        console.log(status);
+        console.log('setState: ', status);
       }
       else {
-        console.log(response);
+        console.log('setState ', response);
+
+        updateRoster();
       }
     }
   );
 
+  
+
+}
+
+const updateRoster = () => {
   pubnub.hereNow(
     {
       channels: [CHANNEL_NAME],
       includeState: true
     },
     function (status, response) {
-      console.log(status, response);
+      console.log('hereNow ', status, response);
+      
+      let occupants = response.channels['amakely-dice'].occupants;
+
+      for (let i=0; i< occupants.length; i++) {
+        if (occupants[i].state && occupants[i].state.name) {
+          addPlayer(occupants[i].uuid, occupants[i].state.name);
+        }
+      }
+
     }
   );
-
 }
 
 const addPlayer = (playerid, name) => {
@@ -100,6 +126,11 @@ const addPlayer = (playerid, name) => {
     }
   );
 
+  createPlayerBox(name);
+  
+}
+
+createPlayerBox = (name) => {
   if (document.getElementById('PlayerBox-' + name) == null) {
     console.log('>> adding player box for ', name);
 
@@ -107,30 +138,109 @@ const addPlayer = (playerid, name) => {
     playerbox.className = 'playerbox';
     playerbox.id = 'PlayerBox-' + name;
     playerbox.innerHTML = '<p>' + name + '</p>';
-    document.getElementById('PlayerGrid').appendChild(playerbox);
+
+    if (name == myName) {
+      document.getElementById('PlayerGrid').prepend(playerbox);
+    } else {
+      document.getElementById('PlayerGrid').appendChild(playerbox);
+    }
+
+    let playerRollBox = document.createElement('div');
+    playerRollBox.id = 'PlayerRollBox-' + name;
+    playerRollBox.className = 'rollbox';
+    playerbox.appendChild(playerRollBox);
+    
   }
-  
+
 }
 
 const removePlayer = (playerid) => {
-  let playerArray = players.map((obj) => obj.uuid);
-  let index = playerArray.indexOf(playerid);
-  console.log(index, players[index].name);
-  let playerbox = document.getElementById('PlayerBox-' + players[index].name);
+  let playerbox = document.getElementById('PlayerBox-' + getPlayer(playerid).name);
   playerbox.remove();
   players.splice(index, 1);
 }
 
+const getPlayer = (playerid) => {
+  let playerArray = players.map((obj) => obj.uuid);
+  let index = playerArray.indexOf(playerid);
+  return players[index];
+}
 
 
 
 
-const uuid = PubNub.generateUUID();
-const pubnub = new PubNub({
-  publishKey: "pub-c-33f45c42-77e8-40c4-a39a-56159239da48",
-  subscribeKey: "sub-c-4b7791e6-8f49-11ea-8dc6-429c98eb9bb1",
-  uuid: uuid,
-});
+const initPubNub = () => {
+
+  pubnub = new PubNub({
+    publishKey: "pub-c-33f45c42-77e8-40c4-a39a-56159239da48",
+    subscribeKey: "sub-c-4b7791e6-8f49-11ea-8dc6-429c98eb9bb1",
+    uuid: uuid,
+  });
+
+  pubnub.subscribe(
+    {
+    channels: [CHANNEL_NAME],
+    withPresence: true,
+    }
+  );
+  
+  pubnub.addListener(
+    {
+      message: function (event) {
+  
+        console.log('>> message: ', event);
+  
+        switch (event.message.type) {
+          case 'join':
+            // addPlayer(event.message.sender, event.message.username);
+          break;
+  
+          case 'leave':
+            removePlayer(event.message.sender);
+          break;
+  
+          case 'roll':
+            let pElement = document.createElement('p');
+            let dice = event.message.dice;
+            let sum = 0;
+            let output = '';
+            for (let i=0; i<dice.length; i++) {
+              sum += dice[i].value;
+              output += dice[i].type + ': ' + dice[i].value + ' ';
+            }
+            output += ' = ' + sum;
+            pElement.appendChild(document.createTextNode(output));
+            let playerbox = document.getElementById('PlayerRollBox-' + getPlayer(event.message.sender).name);
+            playerbox.innerHTML = '';
+            playerbox.appendChild(pElement);
+          break;
+        }
+        
+      }
+      , presence: function (event) {
+        console.log('>> presence: ', event);
+        
+  
+        switch (event.action) {
+
+          case 'join':
+            if (event.state && event.state.name) {
+              console.log(event.state.name + " has joined.")
+              addPlayer(event.uuid, event.state.name);
+            }
+            
+          break;
+
+          case 'leave':
+            console.log('>> player is leaving:' + event.uuid);
+            removePlayer(event.uuid);
+          break;
+        }
+      }
+    }
+  );
+}
+
 
 const sendMessage = (message) => {
   pubnub.publish(
@@ -141,98 +251,15 @@ const sendMessage = (message) => {
     function (status, response) {
     //Handle error here
     }
-);
+  );
 }
 
-var buttons = document.getElementsByClassName('die');
-for (let i=0; i<buttons.length; i++) {
-  buttons[i].addEventListener("click", (e) => {
-    sendMessage(
-      {
-        sender: uuid,
-        type: 'roll',
-        dice: rollMult(e.target.getAttribute('data-sides'))
-      }
-    );
-  });
+const sendRoll = (sides) => {
+  sendMessage(
+    {
+      sender: uuid,
+      type: 'roll',
+      dice: rollMult(sides)
+    }
+  );
 }
-
-    
-
-pubnub.subscribe(
-  {
-  channels: [CHANNEL_NAME],
-  withPresence: true,
-  }
-);
-
-pubnub.addListener(
-  {
-    message: function (event) {
-
-      console.log('>> message: ', event);
-
-      switch (event.message.type) {
-        case 'join':
-          addPlayer(event.message.sender, event.message.username);
-        break;
-
-        case 'leave':
-          removePlayer(event.message.sender);
-        break;
-
-        case 'roll':
-          let pElement = document.createElement('p');
-          let dice = event.message.dice;
-          let sum = 0;
-          let output = '';
-          for (let i=0; i<dice.length; i++) {
-            sum += dice[i].value;
-            output += dice[i].type + ': ' + dice[i].value + ' ';
-          }
-          output += ' = ' + sum;
-          pElement.appendChild(document.createTextNode(output));
-          document.body.appendChild(pElement);
-        break;
-      }
-      
-    }
-    , presence: function (event) {
-      console.log('>> presence: ', event);
-      console.log(event.uuid + " has joined.")
-
-      switch (event.action) {
-        case 'leave':
-          console.log('>> player is leaving:' + event.uuid);
-          removePlayer(event.uuid);
-        break;
-      }
-    }
-  }
-);
-
-
-//   pubnub.history(
-//     {
-//       channel: 'amakely-dice',
-//       count: 10,
-//       stringifiedTimeToken: true,
-//     },
-//     function (status, response) {
-//       let pElement = document.createElement('h3');
-//       pElement.appendChild(document.createTextNode('historical messages'));
-//       document.body.appendChild(pElement);
-
-//       pElement = document.createElement('ul');
-//       let msgs = response.messages;
-//       for (let i in msgs) {
-//         msg = msgs[i];
-//         let pElement = document.createElement('li');
-//         pElement.appendChild(document.createTextNode('sender: ' + msg.entry.sender + ', content: ' + msg.entry.content));
-//         document.body.appendChild(pElement);
-//       }
-//     }
-//   );
-
-
-

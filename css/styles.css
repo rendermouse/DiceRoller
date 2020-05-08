@@ -5,26 +5,54 @@ body {
    font-size: 24px;
 }
 
+div {
+    box-sizing: border-box;
+    vertical-align: top;;
+}
+
 p {
     margin: 0;
 }
 
 #NamePrompt {
     display: block;
+    padding: 32px;
 }
 
 #DiceBar {
     display: none;
     position: fixed;
     background-color: #ccc;
-    padding: 32px;
+    padding: 1vw;
     margin: 0;
     top: 0;
     width: 100%;
 }
 
+#MultBox {
+    display: inline-block;
+    margin: 0.5vw 2vw 0 2vw;
+    width: 20vw;
+}
+
+#mult {
+    display: inline-block;
+    width: 2vw;
+}
+
+#DiceBox {
+    display: inline-block;
+    width: 70vw;
+}
+
+.die {
+    height: 9vw;
+    width: 9vw;
+    cursor: pointer;
+}
+
 input, button {
-    padding: 16px;
+    padding: 2vw;
     font-family: 'Prociono', serif;
     font-size: 24px;
 }
@@ -35,7 +63,8 @@ input, button {
 .playerbox {
     box-sizing: border-box;
     display: inline-block;
-    border: #000 2px solid;
+    border: #000;
+    border-style: double;
     margin: 2%;
     padding: 16px;
     width: 46%;
