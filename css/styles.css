@@ -30,18 +30,28 @@ p {
 
 #MultBox {
     display: inline-block;
-    margin: 0.5vw 2vw 0 2vw;
-    width: 20vw;
+    margin: 10px 1vw 0 1vw;
+    width: 28vw;
 }
 
 #mult {
     display: inline-block;
     width: 2vw;
+    text-align: center;
+}
+
+.mult-button {
+    background-color: #fff;
+    border: #333 1px solid;
+    width: 40px;
+    height: 40px;
+    display: inline-block;
+    text-align: center;
 }
 
 #DiceBox {
     display: inline-block;
-    width: 70vw;
+    width: 66vw;
 }
 
 .svg-die {
@@ -50,7 +60,7 @@ p {
 }
 
 .rollbox {
-    padding: 32px;
+    padding: 16px;
     position: relative;
     border: #000 1px solid;
     margin: 24px 0 0 0;
@@ -86,11 +96,26 @@ input, button {
     display: inline-block;
     border: #000;
     border-style: double;
-    margin: 2%;
+    margin: 8px;
     padding: 16px;
     width: 46%;
 }
 
 .playerbox.mine {
     background-color: #ddd;
+}
+
+
+/* mobile */
+@media (max-width: 767px) {
+
+    .playerbox {
+        width: 90%;
+    }
+    
+    .die {
+        margin-top: 1vw;
+        height: 15vw;
+        width: 15vw;
+    }
 }

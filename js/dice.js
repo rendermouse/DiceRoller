@@ -148,9 +148,15 @@ createPlayerBox = (name) => {
 }
 
 const removePlayer = (playerid) => {
-  let playerbox = document.getElementById('PlayerBox-' + getPlayer(playerid).name);
-  playerbox.remove();
-  players.splice(index, 1);
+  let player = getPlayer(playerid);
+  if (player) {
+    let playerbox = document.getElementById('PlayerBox-' + player.name);
+    playerbox.remove();
+    let playerArray = players.map((obj) => obj.uuid);
+    let index = playerArray.indexOf(playerid);
+    players.splice(index, 1);
+  }
+  
 }
 
 const getPlayer = (playerid) => {
