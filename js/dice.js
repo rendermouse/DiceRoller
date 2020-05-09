@@ -1,8 +1,11 @@
-let CHANNEL_NAME = 'amakely-dice';
+const CHANNEL_NAME = 'amakely-dice';
+const DICE_DELAY = 1500;
 let mult = 1;
 let occupants = [];
 let uuid = '';
 let pubnub;
+let disableRoll = false;
+let currSound = 3;
 
 const exit = (e) => {
   if (pubnub) {
@@ -13,6 +16,7 @@ const exit = (e) => {
         username: myName
       }
     );
+    pubnub.unsubscribeAll();
   }
 }
 
@@ -22,6 +26,7 @@ const multPlus = (e) => {
 }
 const multMinus = (e) => {
     mult --;
+    if (mult == 0) mult = 1;
     document.getElementById('mult').innerHTML = mult;
 }
 
@@ -67,26 +72,12 @@ const submitName = () => {
   document.getElementById('NamePrompt').style.display = 'none';
   document.getElementById('DiceBar').style.display = 'block';
 
-  pubnub.setState(
-    {
-      state: {"name": myName},
-      channels: [CHANNEL_NAME]
-    },
-    function (status, response) {
-      if (status.isError) {
-        console.log('setState: ', status);
-      }
-      else {
-        console.log('setState ', response);
-
-        updateRoster();
-      }
-    }
-  );
-
   
 
+  updateRoster();
+
 }
+
 
 const updateRoster = () => {
   pubnub.hereNow(
@@ -97,7 +88,7 @@ const updateRoster = () => {
     function (status, response) {
       console.log('hereNow ', status, response);
       
-      let occupants = response.channels['amakely-dice'].occupants;
+      let occupants = response.channels[CHANNEL_NAME].occupants;
 
       for (let i=0; i< occupants.length; i++) {
         if (occupants[i].state && occupants[i].state.name) {
@@ -200,19 +191,28 @@ const initPubNub = () => {
           break;
   
           case 'roll':
-            let pElement = document.createElement('p');
+            let player = getPlayer(event.message.sender);
+            let playerbox = document.getElementById('PlayerRollBox-' + player.name);
+            let pElement = document.createElement('div');
+            pElement.className = 'total';
             let dice = event.message.dice;
             let sum = 0;
-            let output = '';
+
+            playerbox.innerHTML = '';
+
             for (let i=0; i<dice.length; i++) {
               sum += dice[i].value;
-              output += dice[i].type + ': ' + dice[i].value + ' ';
+              let diceEl = drawDie(dice[i].type, dice[i].value, 'PlayerRollBox-' + player.name);
             }
-            output += ' = ' + sum;
-            pElement.appendChild(document.createTextNode(output));
-            let playerbox = document.getElementById('PlayerRollBox-' + getPlayer(event.message.sender).name);
-            playerbox.innerHTML = '';
+            pElement.appendChild(document.createTextNode(sum));
             playerbox.appendChild(pElement);
+
+            let snd = document.getElementById('SoundDice' + currSound);
+            snd.play();
+
+            currSound ++;
+            if (currSound > 3) currSound = 1;
+            
           break;
         }
         
@@ -235,10 +235,34 @@ const initPubNub = () => {
             console.log('>> player is leaving:' + event.uuid);
             removePlayer(event.uuid);
           break;
+
+          case 'state-change':
+            console.log('>> state change');
+            addPlayer(event.uuid, event.state.name);
+          break;
         }
       }
     }
   );
+
+  console.log('>> setting my state');
+  pubnub.setState(
+    {
+      state: {"name": myName},
+      channels: [CHANNEL_NAME]
+    },
+    function (status, response) {
+      if (status.isError) {
+        console.log('setState: ', status);
+      }
+      else {
+        console.log('setState ', response);
+
+        updateRoster();
+      }
+    }
+  );
+
 }
 
 
@@ -254,7 +278,9 @@ const sendMessage = (message) => {
   );
 }
 
-const sendRoll = (sides) => {
+const sendRoll = (obj, sides) => {
+  if (disableRoll) return;
+
   sendMessage(
     {
       sender: uuid,
@@ -262,4 +288,23 @@ const sendRoll = (sides) => {
       dice: rollMult(sides)
     }
   );
+
+  disableRoll = true;
+  obj.style.opacity = 0.3;
+  setTimeout(function () {
+    disableRoll = false;
+    obj.style.opacity = 1;
+  }, DICE_DELAY);
+}
+
+
+// DICE
+
+const drawDie = (type, value, targetID) => {
+  let target = document.getElementById(targetID);
+  let diceEl = document.createElement('div');
+  diceEl.className = 'svg-die';
+  diceEl.innerHTML += document.getElementById(type + '-template').innerHTML.replace('%%value%%', value);
+  target.appendChild(diceEl);
+  return diceEl;
 }
