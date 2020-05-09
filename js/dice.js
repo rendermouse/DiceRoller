@@ -57,7 +57,7 @@ let myName = '';
 
 const submitName = () => {
   myName = document.getElementById('PlayerName').value;
-  uuid = 'uuid-' + myName;
+  uuid = 'uuid-' + myName.replace(' ', '-');
 
   initPubNub();
 
@@ -131,6 +131,8 @@ createPlayerBox = (name) => {
     playerbox.innerHTML = '<p>' + name + '</p>';
 
     if (name == myName) {
+      // MY BOX!  Mine!
+      playerbox.className = 'playerbox mine';
       document.getElementById('PlayerGrid').prepend(playerbox);
     } else {
       document.getElementById('PlayerGrid').appendChild(playerbox);
