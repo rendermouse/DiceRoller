@@ -88,8 +88,6 @@ const updateRoster = () => {
       }
     }
   );
-
-  sendPing();
 };
 
 const addPlayer = (playerid, name) => {
@@ -222,10 +220,7 @@ const initPubNub = () => {
 
       switch (event.action) {
         case "join":
-          // if (event.state && event.state.name) {
-          //   console.log(event.state.name + " has joined.");
-          //   addPlayer(event.uuid, event.state.name);
-          // }
+          console.log('>> JOIN');
 
           break;
 
@@ -239,8 +234,8 @@ const initPubNub = () => {
         case "state-change":
           console.log(">> state change", event.state);
           addPlayer(event.uuid, event.state.name);
-          displayMessage(event.state.name == myName ? "You have joined the game." : event.state.name + " has joined the game.");
-          sendPing();
+          var msg = event.state.name == myName ? "You have joined the game." : event.state.name + " has joined the game."
+          displayMessage('<p>' + msg + '</p>');
           break;
       }
     },
@@ -272,16 +267,10 @@ const sendMessage = (message) => {
     },
     function (status, response) {
       //Handle error here
+      console.log('>> msg error: ', status, response);
     }
   );
 };
-
-const sendPing = () => {
-  sendMessage({
-    sender: uuid,
-    type: "ping"
-  });
-}
 
 const sendRoll = (obj, sides) => {
   if (disableRoll) return;
@@ -301,6 +290,9 @@ const sendRoll = (obj, sides) => {
 };
 
 const displayMessage = (text) => {
+
+  console.log('>> display message: ', text);
+  
   let msgDiv = document.getElementById("Messages");
   msgDiv.innerHTML = '<p>' + text + '</p>';
   msgDiv.style.display = "block";
