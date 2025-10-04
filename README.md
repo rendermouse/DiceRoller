@@ -1,8 +1,10 @@
 # DiceRoller
-Network socket shared dice roller, using PubNub.
+This is a socket-based shared dice roller, using PubNub. 
+It allows multiple people to join a room and roll dice together.
 
-This project requires a PubNub account, with active keys, and Presence support.
+This is a small, hobby project built with no JS frameworks, other than the PubNub SDK.
 
+This project requires at least a free-tier PubNub account, with an active keyset, and all Presence support features enabled.
 
 You will need a config.js file in the root of your project, with the following contents:
 

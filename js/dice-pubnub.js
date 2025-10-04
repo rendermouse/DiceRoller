@@ -90,6 +90,7 @@ const updateRoster = () => {
   );
 };
 
+// add new player to local roster and UI
 const addPlayer = (playerid, name) => {
   console.log(">> adding player: ", name, playerid);
 
@@ -134,6 +135,7 @@ createPlayerBox = (name) => {
   }
 };
 
+// remove player from local roster and UI
 const removePlayer = (playerid) => {
   let player = getPlayer(playerid);
   if (player) {
@@ -172,7 +174,7 @@ const initPubNub = () => {
 
   pubnub.addListener({
     message: function (event) {
-      console.log(">> message: ", event);
+      console.log(">> received message: ", event);
 
       switch (event.message.type) {
         case "join":
@@ -221,7 +223,6 @@ const initPubNub = () => {
       switch (event.action) {
         case "join":
           console.log('>> JOIN');
-
           break;
 
         case "leave":
