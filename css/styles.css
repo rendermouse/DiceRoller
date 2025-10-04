@@ -3,6 +3,7 @@ body {
    padding: 0;
    font-family: 'Prociono', serif;
    font-size: 24px;
+   background-color: #fff;
 }
 
 div {
@@ -47,6 +48,7 @@ p {
     height: 40px;
     display: inline-block;
     text-align: center;
+    cursor: pointer;
 }
 
 #DiceBox {

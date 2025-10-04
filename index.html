@@ -1,352 +1,256 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Dice Roller</title>
-  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
-  <link href="https://fonts.googleapis.com/css2?family=Prociono&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Aladin&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css"/>
-</head>
+  <head>
+    <title>Dice Roller</title>
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Prociono&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Aladin&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
 
-<body>
-
+  <body>
     <div id="NamePrompt">
-        <p>Player Name:</p>
-        <input id="PlayerName" type="text" value="" /> <button onclick="submitName()">Join</button>
+      <p>Player Name:</p>
+      <input id="PlayerName" type="text" value="" />
+      <button onclick="submitName()">Join</button>
     </div>
 
     <div id="DiceBar">
-        <div id="MultBox">
-            <div class="mult-button" id="multplus">+</div>
-            <span id="mult">1</span>
-            <div class="mult-button" id="multminus">-</div>
-        </div>
-        <div id="DiceBox">
-            
-            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
-                style="isolation:isolate" viewBox="0 16 240.176 207.998" width="240.176pt" height="207.998pt"
-                class="die" id="publish-d4" onclick="sendRoll(this,4)">
-                <g style="isolation:isolate" id="d4">
-                <polygon points="0,223.998,120.088,16,240.176,223.998" id="Polygon" fill="rgb(152,0,0)"/>
-                <text transform="matrix(1.97,0,0,1.97,91.344,186.922)" id="d4num" style="font-family:'Aladin';font-weight:400;font-size:48px;font-style:normal;fill:#ffffff;stroke:none;">
-                4
-                </text>
-                </g>
-            </svg>
-
-            <svg xmlns="http://www.w3.org/2000/svg" 
-                xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate" 
-                viewBox="44.824 48 155.996 155.996" 
-                class="die" id="publish-d6" onclick="sendRoll(this,6)">
-                <g style="isolation:isolate" id="d6">
-                <rect x="44.824" y="48" width="155.996" height="155.996" transform="matrix(1,0,0,1,0,0)" 
-                id="Rectangle" fill="rgb(152,0,0)"/>
-                <text transform="matrix(1.626,0,0,1.626,102.031,148.793)" id="d6num" style="font-family:'Aladin';font-weight:400;font-size:48px;font-style:normal;fill:#ffffff;stroke:none;">
-                6
-                </text>
-                </g>
-            </svg>
-
-            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate" 
-                viewBox="7.155 8 237.667 256" width="237.667pt" height="256pt"
-                class="die" id="publish-d8" onclick="sendRoll(this,8)">
-                <g style="isolation:isolate" id="d8">
-                <path d=" M 8.155 136.401 L 67.072 72.701 L 125.988 9 L 184.905 72.701 L 243.822 136.401 L 125.988 263 L 8.155 136.401 Z " 
-                id="Path" fill="rgb(152,0,0)" vector-effect="non-scaling-stroke" stroke-width="2" stroke="rgb(179,179,179)" 
-                stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="3"/>
-                <text transform="matrix(1.207,0,0,1.207,106.251,162.925)" id="d8num" style="font-family:'Aladin';font-weight:400;font-size:60px;font-style:normal;fill:#ffffff;stroke:none;">
-                8
-                </text>
-                </g>
-            </svg>
-
-            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
-                style="isolation:isolate" viewBox="6.655 7.498 231.844 260.507" width="231.844pt" height="260.507pt"
-                class="die" id="publish-d10" onclick="sendRoll(this,10)">
-                <g style="isolation:isolate" id="d10">
-                <path d=" M 126.969 173.118 L 126.969 266.505 L 236.999 173.118 L 200.476 142.05 L 126.969 173.118 Z " 
-                id="Path" fill="rgb(152,0,0)" vector-effect="non-scaling-stroke" stroke-width="1" stroke="rgb(255,255,255)" 
-                stroke-linejoin="miter" stroke-linecap="square" stroke-miterlimit="3"/>
-                <path d=" M 49.763 142.05 L 126.969 173.118 L 126.969 266.505 L 18.326 173.118 L 49.763 142.05 Z " 
-                id="Path" fill="rgb(152,0,0)" vector-effect="non-scaling-stroke" stroke-width="1" stroke="rgb(255,255,255)" 
-                stroke-linejoin="miter" stroke-linecap="square" stroke-miterlimit="3"/>
-                <path d=" M 236.999 173.118 L 200.476 142.388 L 126.969 8.998 L 236.999 131.048 L 236.999 173.118 Z " 
-                id="Path" fill="rgb(152,0,0)" vector-effect="non-scaling-stroke" stroke-width="1" stroke="rgb(255,255,255)" 
-                stroke-linejoin="miter" stroke-linecap="square" stroke-miterlimit="3"/>
-                <path d=" M 126.969 8.998 L 49.763 142.388 L 18.326 173.118 L 8.155 131.048 L 126.969 8.998 Z " 
-                id="Path" fill="rgb(152,0,0)" vector-effect="non-scaling-stroke" stroke-width="1" stroke="rgb(255,255,255)" 
-                stroke-linejoin="miter" stroke-linecap="square" stroke-miterlimit="3"/>
-                <path d=" M 126.969 10.349 L 49.763 142.05 L 126.969 173.118 L 200.939 142.05 L 126.969 10.349 Z " 
-                id="Path" fill="rgb(152,0,0)" vector-effect="non-scaling-stroke" stroke-width="1" stroke="rgb(255,255,255)" 
-                stroke-linejoin="miter" stroke-linecap="square" stroke-miterlimit="3"/>
-                <text transform="matrix(1.387,0,0,1.387,99.413,136.156)" id="d10num" 
-                style="font-family:'Aladin';font-weight:400;font-size:48px;font-style:normal;fill:#ffffff;stroke:none;">10</text>
-                </g>
-            </svg>
-
-            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate" 
-            viewBox="12.822 15.331 224 234.667" width="224pt" height="234.667pt" 
-            class="die" id="publish-d12" onclick="sendRoll(this,12)">
-                <g style="isolation:isolate" id="d12">
-                <path d=" M 123.787 70.147 L 153.59 91.801 L 183.394 113.454 L 172.01 148.491 L 160.626 183.527 L 123.787 183.527 L 86.947 183.527 L 75.563 148.491 L 64.179 113.454 L 93.983 91.801 L 123.787 70.147 Z " 
-                id="Path" fill="rgb(152,0,0)"/>
-                <g style="isolation: isolate;">
-                    <path d=" M 123.787 70.147 L 153.59 91.801 L 183.394 113.454 L 172.01 148.491 L 160.626 183.527 L 123.787 183.527 L 86.947 183.527 L 75.563 148.491 L 64.179 113.454 L 93.983 91.801 L 123.787 70.147 Z " 
-                    id="Path" fill="none" vector-effect="non-scaling-stroke" stroke-width="2" stroke="rgb(185,185,185)" stroke-linejoin="round" stroke-linecap="round" 
-                    stroke-miterlimit="3"/>
-                    <path d=" M 123.787 70.147 L 153.59 91.801 L 183.394 113.454 L 172.01 148.491 L 160.626 183.527 L 123.787 183.527 L 86.947 183.527 L 75.563 148.491 L 64.179 113.454 L 93.983 91.801 L 123.787 70.147 Z " 
-                    id="Path" fill="none" vector-effect="non-scaling-stroke" stroke-width="1" stroke="rgb(0,0,0)" stroke-linejoin="miter" stroke-linecap="square" stroke-miterlimit="3"/>
-                </g>
-                <path d=" M 123.787 70.147 L 123.787 16.331 L 193.488 38.331 L 235.822 94.998 L 183.394 113.454 L 123.787 70.147 Z " id="Path" fill="rgb(152,0,0)" 
-                vector-effect="non-scaling-stroke" stroke-width="2" stroke="rgb(185,185,185)" stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="3"/>
-                <path d=" M 183.394 113.454 L 235.822 94.998 L 235.822 166.331 L 193.488 226.998 L 160.626 183.527 L 183.394 113.454 Z " id="Path" fill="rgb(152,0,0)" 
-                vector-effect="non-scaling-stroke" stroke-width="2" stroke="rgb(185,185,185)" stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="3"/>
-                <path d=" M 160.626 183.527 L 193.488 226.998 L 126.822 248.998 L 58.488 226.998 L 86.947 183.527 L 160.626 183.527 Z " 
-                id="Path" fill="rgb(152,0,0)" vector-effect="non-scaling-stroke" stroke-width="2" stroke="rgb(185,185,185)" stroke-linejoin="round" 
-                stroke-linecap="round" stroke-miterlimit="3"/><path d=" M 86.947 183.527 L 58.488 226.998 L 15.822 169.998 L 13.822 98.331 L 64.179 113.454 L 86.947 183.527 Z " 
-                id="Path" fill="rgb(152,0,0)" vector-effect="non-scaling-stroke" stroke-width="2" stroke="rgb(185,185,185)" stroke-linejoin="round" 
-                stroke-linecap="round" stroke-miterlimit="3"/><path d=" M 64.179 113.454 L 13.822 98.331 L 56.155 38.331 L 123.787 16.331 L 123.787 70.147 L 64.179 113.454 Z " 
-                id="Path" fill="rgb(152,0,0)" vector-effect="non-scaling-stroke" stroke-width="2" stroke="rgb(185,185,185)" stroke-linejoin="round" stroke-linecap="round" 
-                stroke-miterlimit="3"/><text transform="matrix(1,0,0,1,100.097,156.117)" id="d12num" 
-                style="font-family:'Aladin';font-weight:400;font-size:60px;font-style:normal;fill:#ffffff;stroke:none;">12</text></g>
-            </svg>
-
-            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate" 
-            viewBox="17.155 12.998 218.667 251.333" width="218.667pt" height="251.333pt" 
-            class="die" id="publish-d20" onclick="sendRoll(this,20)">
-            <g style="isolation:isolate" id="D20"><path d=" M 126.488 65.998 L 64.488 181.331 L 188.155 181.331 L 126.488 65.998 Z " 
-                id="Path" fill="rgb(152,0,0)" vector-effect="non-scaling-stroke" stroke-width="2" stroke="rgb(185,185,185)" stroke-linejoin="miter" stroke-linecap="square" 
-                stroke-miterlimit="3"/><path d=" M 126.488 65.998 L 64.488 181.331 L 20.155 78.665 L 126.488 65.998 Z " id="Path" fill="rgb(152,0,0)" 
-                vector-effect="non-scaling-stroke" stroke-width="2" stroke="rgb(185,185,185)" stroke-linejoin="miter" stroke-linecap="square" 
-                stroke-miterlimit="3"/><path d=" M 126.488 65.998 L 232.822 78.665 L 188.155 181.331 L 126.488 65.998 Z " id="Path" fill="rgb(152,0,0)" 
-                vector-effect="non-scaling-stroke" stroke-width="2" stroke="rgb(185,185,185)" stroke-linejoin="miter" stroke-linecap="square" 
-                stroke-miterlimit="3"/><path d=" M 126.488 65.998 L 126.488 15.998 L 20.155 78.665 L 126.488 65.998 Z " id="Path" fill="rgb(152,0,0)" 
-                vector-effect="non-scaling-stroke" stroke-width="2" stroke="rgb(185,185,185)" stroke-linejoin="miter" stroke-linecap="square" 
-                stroke-miterlimit="3"/><path d=" M 126.488 65.998 L 126.488 15.998 L 232.822 78.665 L 126.488 65.998 Z " id="Path" fill="rgb(152,0,0)" 
-                vector-effect="non-scaling-stroke" stroke-width="2" stroke="rgb(185,185,185)" stroke-linejoin="miter" stroke-linecap="square" 
-                stroke-miterlimit="3"/><path d=" M 64.488 181.331 L 25.488 194.998 L 20.155 78.665 L 64.488 181.331 Z " id="Path" fill="rgb(152,0,0)" 
-                vector-effect="non-scaling-stroke" stroke-width="2" stroke="rgb(185,185,185)" stroke-linejoin="miter" stroke-linecap="square" 
-                stroke-miterlimit="3"/><line x1="25.488" y1="194.998" x2="126.488" y2="261.331" id="Path" vector-effect="non-scaling-stroke" 
-                stroke-width="2" stroke="rgb(185,185,185)" stroke-linejoin="miter" stroke-linecap="square" stroke-miterlimit="3"/>
-                <path d=" M 188.155 181.331 L 126.488 261.331 L 64.488 181.331" id="Path" fill="rgb(152,0,0)" vector-effect="non-scaling-stroke" 
-                stroke-width="2" stroke="rgb(185,185,185)" stroke-linejoin="miter" stroke-linecap="square" stroke-miterlimit="3"/>
-                <path d=" M 188.155 181.331 L 232.822 78.665 L 227.488 193.331 L 188.155 181.331 Z " id="Path" fill="rgb(152,0,0)" 
-                vector-effect="non-scaling-stroke" stroke-width="2" stroke="rgb(185,185,185)" stroke-linejoin="miter" stroke-linecap="square" stroke-miterlimit="3"/>
-                <path d=" M 188.155 181.331 L 227.488 193.331 L 126.488 261.331 L 188.155 181.331 Z " id="Path" fill="rgb(152,0,0)" vector-effect="non-scaling-stroke" 
-                stroke-width="2" stroke="rgb(185,185,185)" stroke-linejoin="miter" stroke-linecap="square" stroke-miterlimit="3"/>
-                <path d=" M 64.488 181.331 L 25.488 194.998 L 126.488 261.331 L 64.488 181.331 Z " id="Path" fill="rgb(152,0,0)" vector-effect="non-scaling-stroke" 
-                stroke-width="2" stroke="rgb(185,185,185)" stroke-linejoin="miter" stroke-linecap="square" stroke-miterlimit="3"/>
-                <text transform="matrix(1,0,0,1,95.808,170.738)" id="d20num" style="font-family:'Aladin';font-weight:400;font-size:60px;font-style:normal;fill:#ffffff;stroke:none;">20</text></g>
-            </svg>
-
-            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate" 
-            viewBox="5.469 36.25 233.883 195.505" width="233.883pt" height="195.505pt" 
-            class="die" id="publish-d100" onclick="sendRoll(this,100)">
-                <g style="isolation:isolate" id="d100"><path d=" M 155.597 160.442 L 155.597 230.255 L 237.852 160.442 L 210.549 137.216 L 155.597 160.442 Z " 
-                    id="Path" fill="rgb(152,0,0)" vector-effect="non-scaling-stroke" stroke-width="1" stroke="rgb(255,255,255)" stroke-linejoin="miter" 
-                    stroke-linecap="square" stroke-miterlimit="3"/><path d=" M 97.88 137.216 L 155.597 160.442 L 155.597 230.255 L 74.379 160.442 L 97.88 137.216 Z " 
-                    id="Path" fill="rgb(152,0,0)" vector-effect="non-scaling-stroke" stroke-width="1" stroke="rgb(255,255,255)" stroke-linejoin="miter" 
-                    stroke-linecap="square" stroke-miterlimit="3"/><path d=" M 237.852 160.442 L 210.549 137.469 L 155.597 37.75 L 237.852 128.991 L 237.852 160.442 Z " 
-                    id="Path" fill="rgb(152,0,0)" vector-effect="non-scaling-stroke" stroke-width="1" stroke="rgb(255,255,255)" stroke-linejoin="miter" 
-                    stroke-linecap="square" stroke-miterlimit="3"/><path d=" M 155.597 37.75 L 97.88 137.469 L 74.379 160.442 L 66.775 128.991 L 155.597 37.75 Z " 
-                    id="Path" fill="rgb(152,0,0)" vector-effect="non-scaling-stroke" stroke-width="1" stroke="rgb(255,255,255)" stroke-linejoin="miter" 
-                    stroke-linecap="square" stroke-miterlimit="3"/><path d=" M 155.597 38.76 L 97.88 137.216 L 155.597 160.442 L 210.895 137.216 L 155.597 38.76 Z " 
-                    id="Path" fill="rgb(152,0,0)" vector-effect="non-scaling-stroke" stroke-width="1" stroke="rgb(255,255,255)" stroke-linejoin="miter" 
-                    stroke-linecap="square" stroke-miterlimit="3"/><path d=" M 95.791 160.442 L 95.791 230.255 L 178.047 160.442 L 150.743 137.216 L 95.791 160.442 Z " 
-                    id="Path" fill="rgb(152,0,0)" vector-effect="non-scaling-stroke" stroke-width="1" stroke="rgb(255,255,255)" stroke-linejoin="miter" 
-                    stroke-linecap="square" stroke-miterlimit="3"/><path d=" M 38.074 137.216 L 95.791 160.442 L 95.791 230.255 L 14.573 160.442 L 38.074 137.216 Z " 
-                    id="Path" fill="rgb(152,0,0)" vector-effect="non-scaling-stroke" stroke-width="1" stroke="rgb(255,255,255)" stroke-linejoin="miter" 
-                    stroke-linecap="square" stroke-miterlimit="3"/><path d=" M 178.047 160.442 L 150.743 137.469 L 95.791 37.75 L 178.047 128.991 L 178.047 160.442 Z " 
-                    id="Path" fill="rgb(152,0,0)" vector-effect="non-scaling-stroke" stroke-width="1" stroke="rgb(255,255,255)" stroke-linejoin="miter" 
-                    stroke-linecap="square" stroke-miterlimit="3"/><path d=" M 95.791 37.75 L 38.074 137.469 L 14.573 160.442 L 6.969 128.991 L 95.791 37.75 Z " 
-                    id="Path" fill="rgb(152,0,0)" vector-effect="non-scaling-stroke" stroke-width="1" stroke="rgb(255,255,255)" stroke-linejoin="miter" 
-                    stroke-linecap="square" stroke-miterlimit="3"/><path d=" M 95.791 38.76 L 38.074 137.216 L 95.791 160.442 L 151.089 137.216 L 95.791 38.76 Z " 
-                    id="Path" fill="rgb(152,0,0)" vector-effect="non-scaling-stroke" stroke-width="1" stroke="rgb(255,255,255)" stroke-linejoin="miter" 
-                    stroke-linecap="square" stroke-miterlimit="3"/>
-                    <text transform="matrix(1.037,0,0,1.037,59.357,139.81)" id="d10num" style="font-family:'Aladin';font-weight:400;font-size:48px;font-style:normal;fill:#ffffff;stroke:none;">100</text></g>
-                </svg>
-                
-        </div>
-        
+      <div id="MultBox">
+        <div class="mult-button" id="multminus">-</div>
+        <span id="mult">1</span>
+        <div class="mult-button" id="multplus">+</div>
+      </div>
+      <div id="DiceBox">
+        <img
+          src="images/d4.svg"
+          class="die"
+          id="publish-d4"
+          onclick="sendRoll(this,4)"
+        />
+        <img
+          src="images/d6.svg"
+          class="die"
+          id="publish-d6"
+          onclick="sendRoll(this,6)"
+        />
+        <img
+          src="images/d8.svg"
+          class="die"
+          id="publish-d4"
+          onclick="sendRoll(this,8)"
+        />
+        <img
+          src="images/d10.svg"
+          class="die"
+          id="publish-d4"
+          onclick="sendRoll(this,10)"
+        />
+        <img
+          src="images/d12.svg"
+          class="die"
+          id="publish-d4"
+          onclick="sendRoll(this,12)"
+        />
+        <img
+          src="images/d20.svg"
+          class="die"
+          id="publish-d4"
+          onclick="sendRoll(this,20)"
+        />
+        <img
+          src="images/d100.svg"
+          class="die"
+          id="publish-d4"
+          onclick="sendRoll(this,100)"
+        />
+      </div>
     </div>
 
+    <div id="PlayerGrid"></div>
 
-<div id="PlayerGrid"></div>
+    <!-- sounds -->
+    <audio src="sounds/dice1.mp3" id="SoundDice1"></audio>
+    <audio src="sounds/dice2.mp3" id="SoundDice2"></audio>
+    <audio src="sounds/dice3.mp3" id="SoundDice3"></audio>
 
+    <!-- dice templates -->
+    <script id="d4-template" type="template">
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+          style="isolation:isolate" viewBox="0 16 240.176 207.998" width="240.176pt" height="207.998pt"
+          class="die d4">
+          <g style="isolation:isolate" id="d4">
+          <polygon points="0,223.998,120.088,16,240.176,223.998" id="Polygon" fill="rgb(152,0,0)"/>
+          <text transform="matrix(1.97,0,0,1.97,118.344,186.922)" id="d4num" style="text-anchor:middle;font-family:'Aladin';font-weight:400;font-size:48px;font-style:normal;fill:#ffffff;stroke:none;">
+          %%value%%
+          </text>
+          </g>
+      </svg>
+    </script>
 
-<!-- sounds -->
-<audio src="sounds/dice1.mp3" id="SoundDice1"/>
-<audio src="sounds/dice2.mp3" id="SoundDice2"/>
-<audio src="sounds/dice3.mp3" id="SoundDice3"/>
+    <script id="d6-template" type="template">
+      <svg xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate"
+          viewBox="44.824 48 155.996 155.996"
+          class="die d6">
+          <g style="isolation:isolate" id="d6">
+          <rect x="44.824" y="48" width="155.996" height="155.996" transform="matrix(1,0,0,1,0,0)"
+          id="Rectangle" fill="rgb(152,0,0)"/>
+          <text transform="matrix(1.626,0,0,1.626,122.031,148.793)" id="d6num" style="text-anchor:middle;font-family:'Aladin';font-weight:400;font-size:48px;font-style:normal;fill:#ffffff;stroke:none;">
+          %%value%%
+          </text>
+          </g>
+      </svg>
+    </script>
 
-<!-- dice templates -->
-<script id="d4-template" type="template">
-    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
-        style="isolation:isolate" viewBox="0 16 240.176 207.998" width="240.176pt" height="207.998pt"
-        class="die d4">
-        <g style="isolation:isolate" id="d4">
-        <polygon points="0,223.998,120.088,16,240.176,223.998" id="Polygon" fill="rgb(152,0,0)"/>
-        <text transform="matrix(1.97,0,0,1.97,118.344,186.922)" id="d4num" style="text-anchor:middle;font-family:'Aladin';font-weight:400;font-size:48px;font-style:normal;fill:#ffffff;stroke:none;">
-        %%value%%
-        </text>
-        </g>
-    </svg>
-</script>
+    <script id="d8-template" type="template">
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate"
+          viewBox="7.155 8 237.667 256" width="237.667pt" height="256pt"
+          class="die d8">
+          <g style="isolation:isolate" id="d8">
+          <path d=" M 8.155 136.401 L 67.072 72.701 L 125.988 9 L 184.905 72.701 L 243.822 136.401 L 125.988 263 L 8.155 136.401 Z "
+          id="Path" fill="rgb(152,0,0)" vector-effect="non-scaling-stroke" stroke-width="2" stroke="rgb(179,179,179)"
+          stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="3"/>
+          <text transform="matrix(1.207,0,0,1.207,126.251,162.925)" id="d8num" style="text-anchor:middle;font-family:'Aladin';font-weight:400;font-size:60px;font-style:normal;fill:#ffffff;stroke:none;">
+          %%value%%
+          </text>
+          </g>
+      </svg>
+    </script>
 
-<script id="d6-template" type="template">
-    <svg xmlns="http://www.w3.org/2000/svg" 
-        xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate" 
-        viewBox="44.824 48 155.996 155.996" 
-        class="die d6">
-        <g style="isolation:isolate" id="d6">
-        <rect x="44.824" y="48" width="155.996" height="155.996" transform="matrix(1,0,0,1,0,0)" 
-        id="Rectangle" fill="rgb(152,0,0)"/>
-        <text transform="matrix(1.626,0,0,1.626,122.031,148.793)" id="d6num" style="text-anchor:middle;font-family:'Aladin';font-weight:400;font-size:48px;font-style:normal;fill:#ffffff;stroke:none;">
-        %%value%%
-        </text>
-        </g>
-    </svg>
-</script>
+    <script id="d10-template" type="template">
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+          style="isolation:isolate" viewBox="6.655 7.498 231.844 260.507" width="231.844pt" height="260.507pt"
+          class="die d10">
+          <g style="isolation:isolate" id="d10">
+          <path d=" M 126.969 173.118 L 126.969 266.505 L 236.999 173.118 L 200.476 142.05 L 126.969 173.118 Z "
+          id="Path" fill="rgb(152,0,0)" vector-effect="non-scaling-stroke" stroke-width="1" stroke="rgb(255,255,255)"
+          stroke-linejoin="miter" stroke-linecap="square" stroke-miterlimit="3"/>
+          <path d=" M 49.763 142.05 L 126.969 173.118 L 126.969 266.505 L 18.326 173.118 L 49.763 142.05 Z "
+          id="Path" fill="rgb(152,0,0)" vector-effect="non-scaling-stroke" stroke-width="1" stroke="rgb(255,255,255)"
+          stroke-linejoin="miter" stroke-linecap="square" stroke-miterlimit="3"/>
+          <path d=" M 236.999 173.118 L 200.476 142.388 L 126.969 8.998 L 236.999 131.048 L 236.999 173.118 Z "
+          id="Path" fill="rgb(152,0,0)" vector-effect="non-scaling-stroke" stroke-width="1" stroke="rgb(255,255,255)"
+          stroke-linejoin="miter" stroke-linecap="square" stroke-miterlimit="3"/>
+          <path d=" M 126.969 8.998 L 49.763 142.388 L 18.326 173.118 L 8.155 131.048 L 126.969 8.998 Z "
+          id="Path" fill="rgb(152,0,0)" vector-effect="non-scaling-stroke" stroke-width="1" stroke="rgb(255,255,255)"
+          stroke-linejoin="miter" stroke-linecap="square" stroke-miterlimit="3"/>
+          <path d=" M 126.969 10.349 L 49.763 142.05 L 126.969 173.118 L 200.939 142.05 L 126.969 10.349 Z "
+          id="Path" fill="rgb(152,0,0)" vector-effect="non-scaling-stroke" stroke-width="1" stroke="rgb(255,255,255)"
+          stroke-linejoin="miter" stroke-linecap="square" stroke-miterlimit="3"/>
+          <text transform="matrix(1.387,0,0,1.387,128.413,136.156)" id="d10num"
+          style="text-anchor:middle;font-family:'Aladin';font-weight:400;font-size:48px;font-style:normal;fill:#ffffff;stroke:none;">
+          %%value%%
+          </text>
+          </g>
+      </svg>
+    </script>
 
-<script id="d8-template" type="template">
-    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate" 
-        viewBox="7.155 8 237.667 256" width="237.667pt" height="256pt"
-        class="die d8">
-        <g style="isolation:isolate" id="d8">
-        <path d=" M 8.155 136.401 L 67.072 72.701 L 125.988 9 L 184.905 72.701 L 243.822 136.401 L 125.988 263 L 8.155 136.401 Z " 
-        id="Path" fill="rgb(152,0,0)" vector-effect="non-scaling-stroke" stroke-width="2" stroke="rgb(179,179,179)" 
-        stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="3"/>
-        <text transform="matrix(1.207,0,0,1.207,126.251,162.925)" id="d8num" style="text-anchor:middle;font-family:'Aladin';font-weight:400;font-size:60px;font-style:normal;fill:#ffffff;stroke:none;">
-        %%value%%
-        </text>
-        </g>
-    </svg>
-</script>
+    <script id="d12-template" type="template">
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate"
+      viewBox="12.822 15.331 224 234.667" width="224pt" height="234.667pt"
+      class="die d12">
+          <g style="isolation:isolate" id="d12">
+          <path d=" M 123.787 70.147 L 153.59 91.801 L 183.394 113.454 L 172.01 148.491 L 160.626 183.527 L 123.787 183.527 L 86.947 183.527 L 75.563 148.491 L 64.179 113.454 L 93.983 91.801 L 123.787 70.147 Z "
+          id="Path" fill="rgb(152,0,0)"/>
+          <g style="isolation: isolate;">
+              <path d=" M 123.787 70.147 L 153.59 91.801 L 183.394 113.454 L 172.01 148.491 L 160.626 183.527 L 123.787 183.527 L 86.947 183.527 L 75.563 148.491 L 64.179 113.454 L 93.983 91.801 L 123.787 70.147 Z "
+              id="Path" fill="none" vector-effect="non-scaling-stroke" stroke-width="2" stroke="rgb(185,185,185)" stroke-linejoin="round" stroke-linecap="round"
+              stroke-miterlimit="3"/>
+              <path d=" M 123.787 70.147 L 153.59 91.801 L 183.394 113.454 L 172.01 148.491 L 160.626 183.527 L 123.787 183.527 L 86.947 183.527 L 75.563 148.491 L 64.179 113.454 L 93.983 91.801 L 123.787 70.147 Z "
+              id="Path" fill="none" vector-effect="non-scaling-stroke" stroke-width="1" stroke="rgb(0,0,0)" stroke-linejoin="miter" stroke-linecap="square" stroke-miterlimit="3"/>
+          </g>
+          <path d=" M 123.787 70.147 L 123.787 16.331 L 193.488 38.331 L 235.822 94.998 L 183.394 113.454 L 123.787 70.147 Z " id="Path" fill="rgb(152,0,0)"
+          vector-effect="non-scaling-stroke" stroke-width="2" stroke="rgb(185,185,185)" stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="3"/>
+          <path d=" M 183.394 113.454 L 235.822 94.998 L 235.822 166.331 L 193.488 226.998 L 160.626 183.527 L 183.394 113.454 Z " id="Path" fill="rgb(152,0,0)"
+          vector-effect="non-scaling-stroke" stroke-width="2" stroke="rgb(185,185,185)" stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="3"/>
+          <path d=" M 160.626 183.527 L 193.488 226.998 L 126.822 248.998 L 58.488 226.998 L 86.947 183.527 L 160.626 183.527 Z "
+          id="Path" fill="rgb(152,0,0)" vector-effect="non-scaling-stroke" stroke-width="2" stroke="rgb(185,185,185)" stroke-linejoin="round"
+          stroke-linecap="round" stroke-miterlimit="3"/><path d=" M 86.947 183.527 L 58.488 226.998 L 15.822 169.998 L 13.822 98.331 L 64.179 113.454 L 86.947 183.527 Z "
+          id="Path" fill="rgb(152,0,0)" vector-effect="non-scaling-stroke" stroke-width="2" stroke="rgb(185,185,185)" stroke-linejoin="round"
+          stroke-linecap="round" stroke-miterlimit="3"/><path d=" M 64.179 113.454 L 13.822 98.331 L 56.155 38.331 L 123.787 16.331 L 123.787 70.147 L 64.179 113.454 Z "
+          id="Path" fill="rgb(152,0,0)" vector-effect="non-scaling-stroke" stroke-width="2" stroke="rgb(185,185,185)" stroke-linejoin="round" stroke-linecap="round"
+          stroke-miterlimit="3"/><text transform="matrix(1,0,0,1,120.097,156.117)" id="d12num"
+          style="text-anchor:middle;font-family:'Aladin';font-weight:400;font-size:60px;font-style:normal;fill:#ffffff;stroke:none;">
+          %%value%%
+      </text></g>
+      </svg>
+    </script>
 
-<script id="d10-template" type="template">
-    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
-        style="isolation:isolate" viewBox="6.655 7.498 231.844 260.507" width="231.844pt" height="260.507pt"
-        class="die d10">
-        <g style="isolation:isolate" id="d10">
-        <path d=" M 126.969 173.118 L 126.969 266.505 L 236.999 173.118 L 200.476 142.05 L 126.969 173.118 Z " 
-        id="Path" fill="rgb(152,0,0)" vector-effect="non-scaling-stroke" stroke-width="1" stroke="rgb(255,255,255)" 
-        stroke-linejoin="miter" stroke-linecap="square" stroke-miterlimit="3"/>
-        <path d=" M 49.763 142.05 L 126.969 173.118 L 126.969 266.505 L 18.326 173.118 L 49.763 142.05 Z " 
-        id="Path" fill="rgb(152,0,0)" vector-effect="non-scaling-stroke" stroke-width="1" stroke="rgb(255,255,255)" 
-        stroke-linejoin="miter" stroke-linecap="square" stroke-miterlimit="3"/>
-        <path d=" M 236.999 173.118 L 200.476 142.388 L 126.969 8.998 L 236.999 131.048 L 236.999 173.118 Z " 
-        id="Path" fill="rgb(152,0,0)" vector-effect="non-scaling-stroke" stroke-width="1" stroke="rgb(255,255,255)" 
-        stroke-linejoin="miter" stroke-linecap="square" stroke-miterlimit="3"/>
-        <path d=" M 126.969 8.998 L 49.763 142.388 L 18.326 173.118 L 8.155 131.048 L 126.969 8.998 Z " 
-        id="Path" fill="rgb(152,0,0)" vector-effect="non-scaling-stroke" stroke-width="1" stroke="rgb(255,255,255)" 
-        stroke-linejoin="miter" stroke-linecap="square" stroke-miterlimit="3"/>
-        <path d=" M 126.969 10.349 L 49.763 142.05 L 126.969 173.118 L 200.939 142.05 L 126.969 10.349 Z " 
-        id="Path" fill="rgb(152,0,0)" vector-effect="non-scaling-stroke" stroke-width="1" stroke="rgb(255,255,255)" 
-        stroke-linejoin="miter" stroke-linecap="square" stroke-miterlimit="3"/>
-        <text transform="matrix(1.387,0,0,1.387,128.413,136.156)" id="d10num" 
-        style="text-anchor:middle;font-family:'Aladin';font-weight:400;font-size:48px;font-style:normal;fill:#ffffff;stroke:none;">
-        %%value%%
-        </text>
-        </g>
-    </svg>
-</script>
+    <script id="d20-template" type="template">
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate"
+      viewBox="17.155 12.998 218.667 251.333" width="218.667pt" height="251.333pt"
+      class="die d20">
+      <g style="isolation:isolate" id="D20"><path d=" M 126.488 65.998 L 64.488 181.331 L 188.155 181.331 L 126.488 65.998 Z "
+          id="Path" fill="rgb(152,0,0)" vector-effect="non-scaling-stroke" stroke-width="2" stroke="rgb(185,185,185)" stroke-linejoin="miter" stroke-linecap="square"
+          stroke-miterlimit="3"/><path d=" M 126.488 65.998 L 64.488 181.331 L 20.155 78.665 L 126.488 65.998 Z " id="Path" fill="rgb(152,0,0)"
+          vector-effect="non-scaling-stroke" stroke-width="2" stroke="rgb(185,185,185)" stroke-linejoin="miter" stroke-linecap="square"
+          stroke-miterlimit="3"/><path d=" M 126.488 65.998 L 232.822 78.665 L 188.155 181.331 L 126.488 65.998 Z " id="Path" fill="rgb(152,0,0)"
+          vector-effect="non-scaling-stroke" stroke-width="2" stroke="rgb(185,185,185)" stroke-linejoin="miter" stroke-linecap="square"
+          stroke-miterlimit="3"/><path d=" M 126.488 65.998 L 126.488 15.998 L 20.155 78.665 L 126.488 65.998 Z " id="Path" fill="rgb(152,0,0)"
+          vector-effect="non-scaling-stroke" stroke-width="2" stroke="rgb(185,185,185)" stroke-linejoin="miter" stroke-linecap="square"
+          stroke-miterlimit="3"/><path d=" M 126.488 65.998 L 126.488 15.998 L 232.822 78.665 L 126.488 65.998 Z " id="Path" fill="rgb(152,0,0)"
+          vector-effect="non-scaling-stroke" stroke-width="2" stroke="rgb(185,185,185)" stroke-linejoin="miter" stroke-linecap="square"
+          stroke-miterlimit="3"/><path d=" M 64.488 181.331 L 25.488 194.998 L 20.155 78.665 L 64.488 181.331 Z " id="Path" fill="rgb(152,0,0)"
+          vector-effect="non-scaling-stroke" stroke-width="2" stroke="rgb(185,185,185)" stroke-linejoin="miter" stroke-linecap="square"
+          stroke-miterlimit="3"/><line x1="25.488" y1="194.998" x2="126.488" y2="261.331" id="Path" vector-effect="non-scaling-stroke"
+          stroke-width="2" stroke="rgb(185,185,185)" stroke-linejoin="miter" stroke-linecap="square" stroke-miterlimit="3"/>
+          <path d=" M 188.155 181.331 L 126.488 261.331 L 64.488 181.331" id="Path" fill="rgb(152,0,0)" vector-effect="non-scaling-stroke"
+          stroke-width="2" stroke="rgb(185,185,185)" stroke-linejoin="miter" stroke-linecap="square" stroke-miterlimit="3"/>
+          <path d=" M 188.155 181.331 L 232.822 78.665 L 227.488 193.331 L 188.155 181.331 Z " id="Path" fill="rgb(152,0,0)"
+          vector-effect="non-scaling-stroke" stroke-width="2" stroke="rgb(185,185,185)" stroke-linejoin="miter" stroke-linecap="square" stroke-miterlimit="3"/>
+          <path d=" M 188.155 181.331 L 227.488 193.331 L 126.488 261.331 L 188.155 181.331 Z " id="Path" fill="rgb(152,0,0)" vector-effect="non-scaling-stroke"
+          stroke-width="2" stroke="rgb(185,185,185)" stroke-linejoin="miter" stroke-linecap="square" stroke-miterlimit="3"/>
+          <path d=" M 64.488 181.331 L 25.488 194.998 L 126.488 261.331 L 64.488 181.331 Z " id="Path" fill="rgb(152,0,0)" vector-effect="non-scaling-stroke"
+          stroke-width="2" stroke="rgb(185,185,185)" stroke-linejoin="miter" stroke-linecap="square" stroke-miterlimit="3"/>
+          <text transform="matrix(1,0,0,1,125.808,170.738)" id="d20num" style="text-anchor:middle;font-family:'Aladin';font-weight:400;font-size:60px;font-style:normal;fill:#ffffff;stroke:none;">
+          %%value%%
+          </text></g>
+      </svg>
+    </script>
 
-<script id="d12-template" type="template">
-    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate" 
-    viewBox="12.822 15.331 224 234.667" width="224pt" height="234.667pt" 
-    class="die d12">
-        <g style="isolation:isolate" id="d12">
-        <path d=" M 123.787 70.147 L 153.59 91.801 L 183.394 113.454 L 172.01 148.491 L 160.626 183.527 L 123.787 183.527 L 86.947 183.527 L 75.563 148.491 L 64.179 113.454 L 93.983 91.801 L 123.787 70.147 Z " 
-        id="Path" fill="rgb(152,0,0)"/>
-        <g style="isolation: isolate;">
-            <path d=" M 123.787 70.147 L 153.59 91.801 L 183.394 113.454 L 172.01 148.491 L 160.626 183.527 L 123.787 183.527 L 86.947 183.527 L 75.563 148.491 L 64.179 113.454 L 93.983 91.801 L 123.787 70.147 Z " 
-            id="Path" fill="none" vector-effect="non-scaling-stroke" stroke-width="2" stroke="rgb(185,185,185)" stroke-linejoin="round" stroke-linecap="round" 
-            stroke-miterlimit="3"/>
-            <path d=" M 123.787 70.147 L 153.59 91.801 L 183.394 113.454 L 172.01 148.491 L 160.626 183.527 L 123.787 183.527 L 86.947 183.527 L 75.563 148.491 L 64.179 113.454 L 93.983 91.801 L 123.787 70.147 Z " 
-            id="Path" fill="none" vector-effect="non-scaling-stroke" stroke-width="1" stroke="rgb(0,0,0)" stroke-linejoin="miter" stroke-linecap="square" stroke-miterlimit="3"/>
-        </g>
-        <path d=" M 123.787 70.147 L 123.787 16.331 L 193.488 38.331 L 235.822 94.998 L 183.394 113.454 L 123.787 70.147 Z " id="Path" fill="rgb(152,0,0)" 
-        vector-effect="non-scaling-stroke" stroke-width="2" stroke="rgb(185,185,185)" stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="3"/>
-        <path d=" M 183.394 113.454 L 235.822 94.998 L 235.822 166.331 L 193.488 226.998 L 160.626 183.527 L 183.394 113.454 Z " id="Path" fill="rgb(152,0,0)" 
-        vector-effect="non-scaling-stroke" stroke-width="2" stroke="rgb(185,185,185)" stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="3"/>
-        <path d=" M 160.626 183.527 L 193.488 226.998 L 126.822 248.998 L 58.488 226.998 L 86.947 183.527 L 160.626 183.527 Z " 
-        id="Path" fill="rgb(152,0,0)" vector-effect="non-scaling-stroke" stroke-width="2" stroke="rgb(185,185,185)" stroke-linejoin="round" 
-        stroke-linecap="round" stroke-miterlimit="3"/><path d=" M 86.947 183.527 L 58.488 226.998 L 15.822 169.998 L 13.822 98.331 L 64.179 113.454 L 86.947 183.527 Z " 
-        id="Path" fill="rgb(152,0,0)" vector-effect="non-scaling-stroke" stroke-width="2" stroke="rgb(185,185,185)" stroke-linejoin="round" 
-        stroke-linecap="round" stroke-miterlimit="3"/><path d=" M 64.179 113.454 L 13.822 98.331 L 56.155 38.331 L 123.787 16.331 L 123.787 70.147 L 64.179 113.454 Z " 
-        id="Path" fill="rgb(152,0,0)" vector-effect="non-scaling-stroke" stroke-width="2" stroke="rgb(185,185,185)" stroke-linejoin="round" stroke-linecap="round" 
-        stroke-miterlimit="3"/><text transform="matrix(1,0,0,1,120.097,156.117)" id="d12num" 
-        style="text-anchor:middle;font-family:'Aladin';font-weight:400;font-size:60px;font-style:normal;fill:#ffffff;stroke:none;">
-        %%value%%
-    </text></g>
-    </svg>
-</script>
+    <script id="d100-template" type="template">
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate"
+          viewBox="5.469 36.25 233.883 195.505" width="233.883pt" height="195.505pt"
+          class="die d100">
+              <g style="isolation:isolate" id="d100"><path d=" M 155.597 160.442 L 155.597 230.255 L 237.852 160.442 L 210.549 137.216 L 155.597 160.442 Z "
+                  id="Path" fill="rgb(152,0,0)" vector-effect="non-scaling-stroke" stroke-width="1" stroke="rgb(255,255,255)" stroke-linejoin="miter"
+                  stroke-linecap="square" stroke-miterlimit="3"/><path d=" M 97.88 137.216 L 155.597 160.442 L 155.597 230.255 L 74.379 160.442 L 97.88 137.216 Z "
+                  id="Path" fill="rgb(152,0,0)" vector-effect="non-scaling-stroke" stroke-width="1" stroke="rgb(255,255,255)" stroke-linejoin="miter"
+                  stroke-linecap="square" stroke-miterlimit="3"/><path d=" M 237.852 160.442 L 210.549 137.469 L 155.597 37.75 L 237.852 128.991 L 237.852 160.442 Z "
+                  id="Path" fill="rgb(152,0,0)" vector-effect="non-scaling-stroke" stroke-width="1" stroke="rgb(255,255,255)" stroke-linejoin="miter"
+                  stroke-linecap="square" stroke-miterlimit="3"/><path d=" M 155.597 37.75 L 97.88 137.469 L 74.379 160.442 L 66.775 128.991 L 155.597 37.75 Z "
+                  id="Path" fill="rgb(152,0,0)" vector-effect="non-scaling-stroke" stroke-width="1" stroke="rgb(255,255,255)" stroke-linejoin="miter"
+                  stroke-linecap="square" stroke-miterlimit="3"/><path d=" M 155.597 38.76 L 97.88 137.216 L 155.597 160.442 L 210.895 137.216 L 155.597 38.76 Z "
+                  id="Path" fill="rgb(152,0,0)" vector-effect="non-scaling-stroke" stroke-width="1" stroke="rgb(255,255,255)" stroke-linejoin="miter"
+                  stroke-linecap="square" stroke-miterlimit="3"/><path d=" M 95.791 160.442 L 95.791 230.255 L 178.047 160.442 L 150.743 137.216 L 95.791 160.442 Z "
+                  id="Path" fill="rgb(152,0,0)" vector-effect="non-scaling-stroke" stroke-width="1" stroke="rgb(255,255,255)" stroke-linejoin="miter"
+                  stroke-linecap="square" stroke-miterlimit="3"/><path d=" M 38.074 137.216 L 95.791 160.442 L 95.791 230.255 L 14.573 160.442 L 38.074 137.216 Z "
+                  id="Path" fill="rgb(152,0,0)" vector-effect="non-scaling-stroke" stroke-width="1" stroke="rgb(255,255,255)" stroke-linejoin="miter"
+                  stroke-linecap="square" stroke-miterlimit="3"/><path d=" M 178.047 160.442 L 150.743 137.469 L 95.791 37.75 L 178.047 128.991 L 178.047 160.442 Z "
+                  id="Path" fill="rgb(152,0,0)" vector-effect="non-scaling-stroke" stroke-width="1" stroke="rgb(255,255,255)" stroke-linejoin="miter"
+                  stroke-linecap="square" stroke-miterlimit="3"/><path d=" M 95.791 37.75 L 38.074 137.469 L 14.573 160.442 L 6.969 128.991 L 95.791 37.75 Z "
+                  id="Path" fill="rgb(152,0,0)" vector-effect="non-scaling-stroke" stroke-width="1" stroke="rgb(255,255,255)" stroke-linejoin="miter"
+                  stroke-linecap="square" stroke-miterlimit="3"/><path d=" M 95.791 38.76 L 38.074 137.216 L 95.791 160.442 L 151.089 137.216 L 95.791 38.76 Z "
+                  id="Path" fill="rgb(152,0,0)" vector-effect="non-scaling-stroke" stroke-width="1" stroke="rgb(255,255,255)" stroke-linejoin="miter"
+                  stroke-linecap="square" stroke-miterlimit="3"/>
+                  <text transform="matrix(1.037,0,0,1.037,95.357,139.81)" id="d10num" style="text-anchor:middle;font-family:'Aladin';font-weight:400;font-size:48px;font-style:normal;fill:#ffffff;stroke:none;">
+                  %%value%%
+                  </text></g>
+      </svg>
+    </script>
 
-<script id="d20-template" type="template">
-    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate" 
-    viewBox="17.155 12.998 218.667 251.333" width="218.667pt" height="251.333pt" 
-    class="die d20">
-    <g style="isolation:isolate" id="D20"><path d=" M 126.488 65.998 L 64.488 181.331 L 188.155 181.331 L 126.488 65.998 Z " 
-        id="Path" fill="rgb(152,0,0)" vector-effect="non-scaling-stroke" stroke-width="2" stroke="rgb(185,185,185)" stroke-linejoin="miter" stroke-linecap="square" 
-        stroke-miterlimit="3"/><path d=" M 126.488 65.998 L 64.488 181.331 L 20.155 78.665 L 126.488 65.998 Z " id="Path" fill="rgb(152,0,0)" 
-        vector-effect="non-scaling-stroke" stroke-width="2" stroke="rgb(185,185,185)" stroke-linejoin="miter" stroke-linecap="square" 
-        stroke-miterlimit="3"/><path d=" M 126.488 65.998 L 232.822 78.665 L 188.155 181.331 L 126.488 65.998 Z " id="Path" fill="rgb(152,0,0)" 
-        vector-effect="non-scaling-stroke" stroke-width="2" stroke="rgb(185,185,185)" stroke-linejoin="miter" stroke-linecap="square" 
-        stroke-miterlimit="3"/><path d=" M 126.488 65.998 L 126.488 15.998 L 20.155 78.665 L 126.488 65.998 Z " id="Path" fill="rgb(152,0,0)" 
-        vector-effect="non-scaling-stroke" stroke-width="2" stroke="rgb(185,185,185)" stroke-linejoin="miter" stroke-linecap="square" 
-        stroke-miterlimit="3"/><path d=" M 126.488 65.998 L 126.488 15.998 L 232.822 78.665 L 126.488 65.998 Z " id="Path" fill="rgb(152,0,0)" 
-        vector-effect="non-scaling-stroke" stroke-width="2" stroke="rgb(185,185,185)" stroke-linejoin="miter" stroke-linecap="square" 
-        stroke-miterlimit="3"/><path d=" M 64.488 181.331 L 25.488 194.998 L 20.155 78.665 L 64.488 181.331 Z " id="Path" fill="rgb(152,0,0)" 
-        vector-effect="non-scaling-stroke" stroke-width="2" stroke="rgb(185,185,185)" stroke-linejoin="miter" stroke-linecap="square" 
-        stroke-miterlimit="3"/><line x1="25.488" y1="194.998" x2="126.488" y2="261.331" id="Path" vector-effect="non-scaling-stroke" 
-        stroke-width="2" stroke="rgb(185,185,185)" stroke-linejoin="miter" stroke-linecap="square" stroke-miterlimit="3"/>
-        <path d=" M 188.155 181.331 L 126.488 261.331 L 64.488 181.331" id="Path" fill="rgb(152,0,0)" vector-effect="non-scaling-stroke" 
-        stroke-width="2" stroke="rgb(185,185,185)" stroke-linejoin="miter" stroke-linecap="square" stroke-miterlimit="3"/>
-        <path d=" M 188.155 181.331 L 232.822 78.665 L 227.488 193.331 L 188.155 181.331 Z " id="Path" fill="rgb(152,0,0)" 
-        vector-effect="non-scaling-stroke" stroke-width="2" stroke="rgb(185,185,185)" stroke-linejoin="miter" stroke-linecap="square" stroke-miterlimit="3"/>
-        <path d=" M 188.155 181.331 L 227.488 193.331 L 126.488 261.331 L 188.155 181.331 Z " id="Path" fill="rgb(152,0,0)" vector-effect="non-scaling-stroke" 
-        stroke-width="2" stroke="rgb(185,185,185)" stroke-linejoin="miter" stroke-linecap="square" stroke-miterlimit="3"/>
-        <path d=" M 64.488 181.331 L 25.488 194.998 L 126.488 261.331 L 64.488 181.331 Z " id="Path" fill="rgb(152,0,0)" vector-effect="non-scaling-stroke" 
-        stroke-width="2" stroke="rgb(185,185,185)" stroke-linejoin="miter" stroke-linecap="square" stroke-miterlimit="3"/>
-        <text transform="matrix(1,0,0,1,125.808,170.738)" id="d20num" style="text-anchor:middle;font-family:'Aladin';font-weight:400;font-size:60px;font-style:normal;fill:#ffffff;stroke:none;">
-        %%value%%
-        </text></g>
-    </svg>
-</script>
-
-<script id="d100-template" type="template">
-    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate" 
-        viewBox="5.469 36.25 233.883 195.505" width="233.883pt" height="195.505pt" 
-        class="die d100">
-            <g style="isolation:isolate" id="d100"><path d=" M 155.597 160.442 L 155.597 230.255 L 237.852 160.442 L 210.549 137.216 L 155.597 160.442 Z " 
-                id="Path" fill="rgb(152,0,0)" vector-effect="non-scaling-stroke" stroke-width="1" stroke="rgb(255,255,255)" stroke-linejoin="miter" 
-                stroke-linecap="square" stroke-miterlimit="3"/><path d=" M 97.88 137.216 L 155.597 160.442 L 155.597 230.255 L 74.379 160.442 L 97.88 137.216 Z " 
-                id="Path" fill="rgb(152,0,0)" vector-effect="non-scaling-stroke" stroke-width="1" stroke="rgb(255,255,255)" stroke-linejoin="miter" 
-                stroke-linecap="square" stroke-miterlimit="3"/><path d=" M 237.852 160.442 L 210.549 137.469 L 155.597 37.75 L 237.852 128.991 L 237.852 160.442 Z " 
-                id="Path" fill="rgb(152,0,0)" vector-effect="non-scaling-stroke" stroke-width="1" stroke="rgb(255,255,255)" stroke-linejoin="miter" 
-                stroke-linecap="square" stroke-miterlimit="3"/><path d=" M 155.597 37.75 L 97.88 137.469 L 74.379 160.442 L 66.775 128.991 L 155.597 37.75 Z " 
-                id="Path" fill="rgb(152,0,0)" vector-effect="non-scaling-stroke" stroke-width="1" stroke="rgb(255,255,255)" stroke-linejoin="miter" 
-                stroke-linecap="square" stroke-miterlimit="3"/><path d=" M 155.597 38.76 L 97.88 137.216 L 155.597 160.442 L 210.895 137.216 L 155.597 38.76 Z " 
-                id="Path" fill="rgb(152,0,0)" vector-effect="non-scaling-stroke" stroke-width="1" stroke="rgb(255,255,255)" stroke-linejoin="miter" 
-                stroke-linecap="square" stroke-miterlimit="3"/><path d=" M 95.791 160.442 L 95.791 230.255 L 178.047 160.442 L 150.743 137.216 L 95.791 160.442 Z " 
-                id="Path" fill="rgb(152,0,0)" vector-effect="non-scaling-stroke" stroke-width="1" stroke="rgb(255,255,255)" stroke-linejoin="miter" 
-                stroke-linecap="square" stroke-miterlimit="3"/><path d=" M 38.074 137.216 L 95.791 160.442 L 95.791 230.255 L 14.573 160.442 L 38.074 137.216 Z " 
-                id="Path" fill="rgb(152,0,0)" vector-effect="non-scaling-stroke" stroke-width="1" stroke="rgb(255,255,255)" stroke-linejoin="miter" 
-                stroke-linecap="square" stroke-miterlimit="3"/><path d=" M 178.047 160.442 L 150.743 137.469 L 95.791 37.75 L 178.047 128.991 L 178.047 160.442 Z " 
-                id="Path" fill="rgb(152,0,0)" vector-effect="non-scaling-stroke" stroke-width="1" stroke="rgb(255,255,255)" stroke-linejoin="miter" 
-                stroke-linecap="square" stroke-miterlimit="3"/><path d=" M 95.791 37.75 L 38.074 137.469 L 14.573 160.442 L 6.969 128.991 L 95.791 37.75 Z " 
-                id="Path" fill="rgb(152,0,0)" vector-effect="non-scaling-stroke" stroke-width="1" stroke="rgb(255,255,255)" stroke-linejoin="miter" 
-                stroke-linecap="square" stroke-miterlimit="3"/><path d=" M 95.791 38.76 L 38.074 137.216 L 95.791 160.442 L 151.089 137.216 L 95.791 38.76 Z " 
-                id="Path" fill="rgb(152,0,0)" vector-effect="non-scaling-stroke" stroke-width="1" stroke="rgb(255,255,255)" stroke-linejoin="miter" 
-                stroke-linecap="square" stroke-miterlimit="3"/>
-                <text transform="matrix(1.037,0,0,1.037,95.357,139.81)" id="d10num" style="text-anchor:middle;font-family:'Aladin';font-weight:400;font-size:48px;font-style:normal;fill:#ffffff;stroke:none;">
-                %%value%%
-                </text></g>
-    </svg>
-</script>
-
-<script src="https://cdn.pubnub.com/sdk/javascript/pubnub.4.21.7.min.js"></script>
-<script src="js/dice.js"></script>
-
-</body>
+    <script src="https://cdn.pubnub.com/sdk/javascript/pubnub.4.21.7.min.js"></script>
+    <script src="config.js"></script>
+    <script src="js/dice-pubnub.js"></script>
+  </body>
 </html>
