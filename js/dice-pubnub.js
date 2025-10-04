@@ -1,7 +1,6 @@
-const CHANNEL_NAME = "amakely-dice";
 const DICE_DELAY = 1500;
 let mult = 1;
-let uuid = "";
+let uuid = crypto.randomUUID();
 let pubnub;
 let disableRoll = false;
 let currSound = 3;
@@ -12,11 +11,14 @@ let myName = "";
 const init = (e) => {
   document.getElementById("multplus").addEventListener("click", multPlus);
   document.getElementById("multminus").addEventListener("click", multMinus);
-  window.addEventListener("onbeforeunload", exit);
+  window.onbeforeunload = exit;
 };
 
 // clean up on browser exit/reload, leave the channel
 const exit = (e) => {
+
+  alert('>> sending leave message');
+  
   if (pubnub) {
     sendMessage({
       sender: uuid,
@@ -58,7 +60,6 @@ const rollMult = (sides) => {
 // join the channel
 const submitName = () => {
   myName = document.getElementById("PlayerName").value;
-  uuid = "uuid-" + myName.replace(" ", "-");
 
   initPubNub();
 
@@ -72,13 +73,13 @@ const submitName = () => {
 const updateRoster = () => {
   pubnub.hereNow(
     {
-      channels: [CHANNEL_NAME],
+      channels: [config.pubnub.channelName],
       includeState: true,
     },
     function (status, response) {
       console.log("hereNow ", status, response);
 
-      let occupants = response.channels[CHANNEL_NAME].occupants;
+      let occupants = response.channels[config.pubnub.channelName].occupants;
 
       for (let i = 0; i < occupants.length; i++) {
         if (occupants[i].state && occupants[i].state.name) {
@@ -87,6 +88,8 @@ const updateRoster = () => {
       }
     }
   );
+
+  sendPing();
 };
 
 const addPlayer = (playerid, name) => {
@@ -137,10 +140,14 @@ const removePlayer = (playerid) => {
   let player = getPlayer(playerid);
   if (player) {
     let playerbox = document.getElementById("PlayerBox-" + player.name);
-    playerbox.remove();
-    let playerArray = players.map((obj) => obj.uuid);
-    let index = playerArray.indexOf(playerid);
-    players.splice(index, 1);
+    try {
+      playerbox?.remove();
+      let playerArray = players.map((obj) => obj.uuid);
+      let index = playerArray.indexOf(playerid);
+      players.splice(index, 1);
+    } catch (e) { 
+      console.log(">> error removing player box: ", e);
+    }
   }
 };
 
@@ -150,16 +157,18 @@ const getPlayer = (playerid) => {
   return players[index];
 };
 
-// initialize pubnub
+// initialize pubnub with keys from config
 const initPubNub = () => {
   pubnub = new PubNub({
-    publishKey: keys.publishKey,
-    subscribeKey: keys.subscribeKey,
+    publishKey: config.pubnub.publishKey,
+    subscribeKey: config.pubnub.subscribeKey,
     uuid: uuid,
+    // presenceTimeout: 40,
+    // heartbeatInterval: 20
   });
 
   pubnub.subscribe({
-    channels: [CHANNEL_NAME],
+    channels: [config.pubnub.channelName],
     withPresence: true,
   });
 
@@ -213,22 +222,25 @@ const initPubNub = () => {
 
       switch (event.action) {
         case "join":
-          if (event.state && event.state.name) {
-            console.log(event.state.name + " has joined.");
-            addPlayer(event.uuid, event.state.name);
-          }
+          // if (event.state && event.state.name) {
+          //   console.log(event.state.name + " has joined.");
+          //   addPlayer(event.uuid, event.state.name);
+          // }
 
           break;
 
         case "leave":
         case "timeout":
-          console.log(">> player is leaving or timed out:" + event.uuid);
+          console.log(">> player is leaving or timed out:" + event.state.name);
           removePlayer(event.uuid);
+          displayMessage(event.state.name == myName ? "You have left the game." : event.state.name + " has left the game.");
           break;
 
         case "state-change":
           console.log(">> state change", event.state);
           addPlayer(event.uuid, event.state.name);
+          displayMessage(event.state.name == myName ? "You have joined the game." : event.state.name + " has joined the game.");
+          sendPing();
           break;
       }
     },
@@ -238,11 +250,11 @@ const initPubNub = () => {
   pubnub.setState(
     {
       state: { name: myName },
-      channels: [CHANNEL_NAME],
+      channels: [config.pubnub.channelName],
     },
     function (status, response) {
       if (status.isError) {
-        console.log("setState: ", status);
+        console.log("err setState: ", status);
       } else {
         console.log("setState ", response);
 
@@ -255,7 +267,7 @@ const initPubNub = () => {
 const sendMessage = (message) => {
   pubnub.publish(
     {
-      channel: CHANNEL_NAME,
+      channel: config.pubnub.channelName,
       message: message,
     },
     function (status, response) {
@@ -263,6 +275,13 @@ const sendMessage = (message) => {
     }
   );
 };
+
+const sendPing = () => {
+  sendMessage({
+    sender: uuid,
+    type: "ping"
+  });
+}
 
 const sendRoll = (obj, sides) => {
   if (disableRoll) return;
@@ -280,6 +299,18 @@ const sendRoll = (obj, sides) => {
     obj.style.opacity = 1;
   }, DICE_DELAY);
 };
+
+const displayMessage = (text) => {
+  let msgDiv = document.getElementById("Messages");
+  msgDiv.innerHTML = '<p>' + text + '</p>';
+  msgDiv.style.display = "block";
+
+  setTimeout( () => {
+    msgDiv.innerHTML = '';
+    msgDiv.style.display = "none";
+  }, 5000);
+};
+
 
 // DICE
 
