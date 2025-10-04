@@ -1,5 +1,8 @@
 # DiceRoller
-Network socket shared dice roller, using PubNub
+Network socket shared dice roller, using PubNub.
+
+This project requires a PubNub account, with active keys, and Presence support.
+
 
 You will need a config.js file in the root of your project, with the following contents:
 
